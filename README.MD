@@ -5,7 +5,7 @@ We are simulating 2 networks
 * `ccloud` where Kafka resides
 * `onpremise` where are the clients
 
-`onpremise` can't reach `ccloud`, and thus needs a proxy.
+`onpremise` can't reach `ccloud`, and thus needs a proxy with can connect to both.
 
 The problem relies in the medata protocol, and thus a simple haproxy would not suffice. We need to proxy at Level7 to change the ip announces by Kafka by the ip of the proxy.
 
@@ -45,7 +45,7 @@ docker-compose exec kafka-client kafka-console-producer --bootstrap-server kafka
 
 ## HAProxy
 
-To test, run the stack with `docker-compose up -d` 
+To test, run the stack with `docker-compose up -d`
 
 in `kafka-client` enter docker 
 
