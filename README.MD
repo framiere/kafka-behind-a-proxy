@@ -7,7 +7,7 @@ We are simulating 2 networks
 
 `onpremise` can't reach `ccloud`, and thus needs a proxy with can connect to both.
 
-The problem relies in the medata protocol, and thus a simple haproxy would not suffice. We need to proxy at Level7 to change the ip announces by Kafka by the ip of the proxy.
+The problem relies in the medata protocol, and thus a simple haproxy would not suffice. We need to proxy at Level7 to change the ip announced by Kafka by the ip of the proxy (kafka-proxy approach), or trick the metadata sent to go through the proxy (ha-proxy approach).
 
 
 ## Kafka-proxy 
