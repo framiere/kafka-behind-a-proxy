@@ -29,9 +29,11 @@ Let's decompose the first argument
 2. We are asking to proxy `broker-1:9092` via `0.0.0.0:9092` 
 3. We are announcing this proxy to clients as `kafka-proxy:9092`
 
-To test:
+To test, run the stack with `docker-compose up -d` then write something into a topic
 
-`docker-compose exec kafka-client kafka-console-producer --broker-list kafka-proxy:9092 --topic example`
+```sh
+docker-compose exec kafka-client kafka-console-producer --broker-list kafka-proxy:9092 --topic example`
+```
 
 type a lovely `hello world` and a firm [Enter].
 
@@ -42,6 +44,8 @@ docker-compose exec kafka-client kafka-console-producer --bootstrap-server kafka
 ```
 
 ## HAProxy
+
+To test, run the stack with `docker-compose up -d` 
 
 in `kafka-client` enter docker 
 
