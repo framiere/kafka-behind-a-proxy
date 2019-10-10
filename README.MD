@@ -1,9 +1,19 @@
 # Testing kafka-proxy
 
-In order to test [kafka-proxy](https://github.com/grepplabs/kafka-proxy) we are simulating 2 networks
+We are simulating 2 networks
 
-* ccloud
-* onpremise
+* `ccloud` where Kafka resides
+* `onpremise` where are the clients
+
+`onpremise` can't reach `ccloud`, and thus needs a proxy.
+
+The problem relies in the medata protocol, and thus a simple haproxy would not suffice. We need to proxy at Level7 to change the ip announces by Kafka by the ip of the proxy.
+
+
+## Kafka-proxy 
+
+Enter https://github.com/grepplabs/kafka-proxy.
+
 
 The main command is the following:
 
@@ -29,4 +39,17 @@ And then consume it back via
 
 ```sh
 docker-compose exec kafka-client kafka-console-producer --bootstrap-server kafka-proxy:9092 --topic example --from-beginning
+```
+
+## HAProxy
+
+in `kafka-client` enter docker 
+
+```
+docker-compose exec kafka-client bash
+echo `host haproxy-1 | awk '{print $4}'` broker-1 >> /etc/hosts
+echo `host haproxy-2 | awk '{print $4}'` broker-2 >> /etc/hosts
+echo `host haproxy-3 | awk '{print $4}'` broker-3 >> /etc/hosts
+echo example | kafka-client kafka-console-producer --broker-list haproxy-1:9092 --topic example
+kafka-client kafka-console-producer --bootstrap-server haproxy-1:9092 --topic example --from-beginning
 ```
